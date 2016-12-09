@@ -361,7 +361,6 @@ private[spark] class TaskSetManager(
     if (longestQueue._2.size > 0) {
       logInfo("get one remote Disk task from host " + longestQueue._1)
     }
-
     longestQueue
   }
 
@@ -607,13 +606,13 @@ private[spark] class TaskSetManager(
       }
 
       for ((index, storageHost) <- dequeueTaskFromList(execId, getPendingTasksForDisk())) {
-        logInfo("dequeueTaskFrom Disk Task List id " + index)
+        logInfo("dequeueTaskFrom Disk Task List id " + index + " cpuhost " + host + " storagehost " + storageHost)
         setSplitPreferLoc(index, storageHost)
         return Some((index, TaskLocality.ANY, false))
       }
 
       for ((index, storageHost) <- dequeueTaskFromList(execId, getPendingTasksForSSD())) {
-        logInfo("dequeueTaskFrom SSD Task List id " + index)
+        logInfo("dequeueTaskFrom SSD Task List id " + index + " cpuhost " + host + " storagehost " + storageHost)
         setSplitPreferLoc(index, storageHost)
         return Some((index, TaskLocality.ANY, false))
       }

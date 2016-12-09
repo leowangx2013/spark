@@ -600,21 +600,21 @@ private[spark] class TaskSetManager(
     }
 
     if (TaskLocality.isAllowed(maxLocality, TaskLocality.ANY)) {
-      for ((index, host) <- dequeueTaskFromList(execId, getPendingTasksForArchive())) {
+      for ((index, storageHost) <- dequeueTaskFromList(execId, getPendingTasksForArchive())) {
         logInfo("dequeueTaskFrom Archive(node_local) List id " + index + " host " + host)
-        setSplitPreferLoc(index, host)
+        setSplitPreferLoc(index, storageHost)
         return Some((index, TaskLocality.ANY, false))
       }
 
-      for ((index, host) <- dequeueTaskFromList(execId, getPendingTasksForDisk())) {
+      for ((index, storageHost) <- dequeueTaskFromList(execId, getPendingTasksForDisk())) {
         logInfo("dequeueTaskFrom Disk Task List id " + index)
-        setSplitPreferLoc(index, host)
+        setSplitPreferLoc(index, storageHost)
         return Some((index, TaskLocality.ANY, false))
       }
 
-      for ((index, host) <- dequeueTaskFromList(execId, getPendingTasksForSSD())) {
+      for ((index, storageHost) <- dequeueTaskFromList(execId, getPendingTasksForSSD())) {
         logInfo("dequeueTaskFrom SSD Task List id " + index)
-        setSplitPreferLoc(index, host)
+        setSplitPreferLoc(index, storageHost)
         return Some((index, TaskLocality.ANY, false))
       }
 
